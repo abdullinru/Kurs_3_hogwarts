@@ -11,16 +11,15 @@ import java.util.Map;
 @Service
 public class FacultyService {
     private final Map<Long, Faculty> faculties = new HashMap<>();
+    private long idFaculty = 1;
 
     public Faculty creatFaculty(Faculty faculty) {
+        faculty.setId(idFaculty++);
         faculties.put(faculty.getId(), faculty);
         return faculty;
     }
 
     public Faculty getFacultyById(long id) {
-        if (!faculties.containsKey(id)) {
-            return null;
-        }
         return faculties.get(id);
     }
 
@@ -28,13 +27,11 @@ public class FacultyService {
         if (!faculties.containsKey(faculty.getId())) {
             return null;
         }
-        return faculties.put(faculty.getId(), faculty);
+        faculties.put(faculty.getId(), faculty);
+        return faculty;
     }
 
     public Faculty removeFacultyById(long id) {
-        if (!faculties.containsKey(id)) {
-            return null;
-        }
         return faculties.remove(id);
     }
     public Faculty removeFaculty(Faculty faculty) {

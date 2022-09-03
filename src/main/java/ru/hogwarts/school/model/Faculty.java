@@ -7,10 +7,8 @@ public class Faculty {
     private String name;
     private String color;
 
-    private static long idFuculty = 1;
-
     public Faculty(long id, String name, String color) {
-        this.id = idFuculty++;
+        this.id = id;
         this.name = name;
         this.color = color;
     }
@@ -47,7 +45,6 @@ public class Faculty {
                 ", color='" + color + '\'' +
                 '}';
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,7 +56,6 @@ public class Faculty {
         if (!Objects.equals(name, faculty.name)) return false;
         return Objects.equals(color, faculty.color);
     }
-
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));

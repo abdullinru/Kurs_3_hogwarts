@@ -29,7 +29,8 @@ public class StudentService {
         if (!students.containsKey(student.getId())) {
             return null;
         }
-        return students.put(student.getId(), student);
+        students.put(student.getId(), student);
+        return student;
     }
 
     public Student removeStudentById(long id) {
