@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 public class FacultyController {
     private final FacultyService facultyService;
 
@@ -24,7 +24,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.creatFaculty(faculty));
     }
 
-    @GetMapping({"id"})
+    @GetMapping("/{id}")
     public ResponseEntity<Faculty> findFacultyById(@PathVariable Long id) {
         Faculty findFaculty = facultyService.getFacultyById(id);
         if (findFaculty == null) {
@@ -32,40 +32,39 @@ public class FacultyController {
         }
         return ResponseEntity.ok(findFaculty);
     }
-
-    @PutMapping
-    public ResponseEntity<Faculty> updateStudent(@RequestBody Faculty faculty) {
-        Faculty updateFaculty = facultyService.updateFaculty(faculty);
-        if (updateFaculty == null) {
-            ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(updateFaculty);
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
-        Faculty removeFaculty = facultyService.removeFacultyById(id);
-        if (removeFaculty == null) {
-            ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(removeFaculty);
-    }
-    @GetMapping("{color}")
-    public ResponseEntity<List<Faculty>> facultiesByAge(@PathVariable String color) {
+    @GetMapping
+    public ResponseEntity<List<Faculty>> facultiesByAge(@RequestParam String color) {
         List<Faculty> collect = facultyService.getAllFaculties().stream()
                 .filter(e -> e.getColor().equals(color))
                 .collect(Collectors.toList());
         if (collect.isEmpty()) {
-            ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(collect);
     }
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<Collection<Faculty>> allFaculties() {
         Collection<Faculty> collect = facultyService.getAllFaculties();
         if (collect.isEmpty()) {
-            ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(collect);
+    }
+    @PutMapping
+    public ResponseEntity<Faculty> updateStudent(@RequestBody Faculty faculty) {
+        Faculty updateFaculty = facultyService.updateFaculty(faculty);
+        if (updateFaculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updateFaculty);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
+        Faculty removeFaculty = facultyService.removeFacultyById(id);
+        if (removeFaculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(removeFaculty);
     }
 }
