@@ -58,13 +58,9 @@ public class FacultyController {
         }
         return ResponseEntity.ok(updateFaculty);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
-        Faculty removeFaculty = facultyService.removeFacultyById(id);
-        if (removeFaculty == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(removeFaculty);
+        facultyService.removeFacultyById(id);
+        return ResponseEntity.ok().build();
     }
 }
