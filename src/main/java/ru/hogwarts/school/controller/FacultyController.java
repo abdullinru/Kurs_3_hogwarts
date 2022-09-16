@@ -42,6 +42,35 @@ public class FacultyController {
         }
         return ResponseEntity.ok(collect);
     }
+    @GetMapping("/find")
+    public ResponseEntity<Faculty> findfacultyByNameOrColor(@RequestParam(required = false) String name,
+                                            @RequestParam(required = false) String color) {
+        if (name != null) {
+            Faculty fa = facultyService.findFacultyByName(name);
+            if (fa == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(fa);
+        }
+        if (color != null) {
+            Faculty fa  = facultyService.findFacultyByColor(color);
+            if (fa == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(fa);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/students")
+    public ResponseEntity<Collection<Student>> getAllStudentsOfFaculty(@RequestParam Long id) {
+        Collection<Student> students = facultyService.getStudentsOfFaculty(id);
+        if (students.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(students);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Collection<Faculty>> allFaculties() {
         Collection<Faculty> collect = facultyService.getAllFaculties();
@@ -50,6 +79,7 @@ public class FacultyController {
         }
         return ResponseEntity.ok(collect);
     }
+
     @PutMapping
     public ResponseEntity<Faculty> updateStudent(@RequestBody Faculty faculty) {
         Faculty updateFaculty = facultyService.updateFaculty(faculty);
