@@ -20,29 +20,33 @@ public class FacultyService {
     }
 
     public Faculty getFacultyById(long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
     public Faculty updateFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
     public void removeFacultyById(long id) {
-        facultyRepository.deleteById(id);
+        facultyRepository.findById(id).ifPresent(fa -> facultyRepository.deleteById(id));
     }
 
     public Collection<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
     }
 
-    public Faculty findFacultyByName(String name) {
-        return facultyRepository.findFirstByNameIgnoreCase(name);
+    public Collection<Faculty> findFacultyByName(String name) {
+        return facultyRepository.findByNameIgnoreCase(name);
     }
-    public Faculty findFacultyByColor(String color) {
-        return facultyRepository.findFirstByColorIgnoreCase(color);
+    public Collection<Faculty> findFacultyByColor(String color) {
+        return facultyRepository.findByColorIgnoreCase(color);
+    }
+
+    public Collection<Faculty> findFacultiesByNameOrColor(String nameOrColor) {
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(nameOrColor, nameOrColor);
     }
 
     public Collection<Student> getStudentsOfFaculty(Long id) {
-        Faculty fa = facultyRepository.findById(id).get();
+        Faculty fa = facultyRepository.findById(id).orElse(null);
         if (fa == null) {
             return Collections.emptyList();
         }

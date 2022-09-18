@@ -33,41 +33,19 @@ public class FacultyController {
         return ResponseEntity.ok(findFaculty);
     }
     @GetMapping
-    public ResponseEntity<List<Faculty>> facultiesByAge(@RequestParam String color) {
-        List<Faculty> collect = facultyService.getAllFaculties().stream()
-                .filter(e -> e.getColor().equals(color))
-                .collect(Collectors.toList());
-        if (collect.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(collect);
+    public ResponseEntity<Collection<Faculty>> facultiesByColor(@RequestParam String color) {
+        Collection<Faculty> fa = facultyService.findFacultyByColor(color);
+        return ResponseEntity.ok(fa);
     }
     @GetMapping("/find")
-    public ResponseEntity<Faculty> findfacultyByNameOrColor(@RequestParam(required = false) String name,
-                                            @RequestParam(required = false) String color) {
-        if (name != null) {
-            Faculty fa = facultyService.findFacultyByName(name);
-            if (fa == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(fa);
-        }
-        if (color != null) {
-            Faculty fa  = facultyService.findFacultyByColor(color);
-            if (fa == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(fa);
-        }
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<Collection<Faculty>> findfacultyByNameOrColor(@RequestParam String nameOrcolor) {
+        Collection<Faculty> fa = facultyService.findFacultiesByNameOrColor(nameOrcolor);
+        return ResponseEntity.ok(fa);
     }
 
-    @GetMapping("/students")
-    public ResponseEntity<Collection<Student>> getAllStudentsOfFaculty(@RequestParam Long id) {
+    @GetMapping("/{id}/students")
+    public ResponseEntity<Collection<Student>> getAllStudentsOfFaculty(@PathVariable Long id) {
         Collection<Student> students = facultyService.getStudentsOfFaculty(id);
-        if (students.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(students);
     }
 
