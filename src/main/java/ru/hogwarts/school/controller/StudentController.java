@@ -34,10 +34,8 @@ public class StudentController {
         return ResponseEntity.ok(st);
     }
     @GetMapping
-    public ResponseEntity<List<Student>> studentsByAge(@RequestParam Integer age) {
-        List<Student> collect = studentService.getAllStudents().stream()
-                .filter(e -> e.getAge() == age)
-                .collect(Collectors.toList());
+    public ResponseEntity<Collection<Student>> studentsByAge(@RequestParam Integer age) {
+        Collection<Student> collect = studentService.findStudentsByAge(age);
         if (collect.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -61,8 +59,8 @@ public class StudentController {
         return ResponseEntity.ok(studentCollection);
     }
 
-    @GetMapping("/faculty")
-    public ResponseEntity<Faculty> getFacultyByStudentById(@RequestParam Long id) {
+    @GetMapping("/{id}/faculty")
+    public ResponseEntity<Faculty> getFacultyByStudentById(@PathVariable Long id) {
         Faculty fa = studentService.getFacultyOfStudent(id);
         if (fa == null) {
             return ResponseEntity.notFound().build();
