@@ -33,33 +33,14 @@ public class FacultyController {
         return ResponseEntity.ok(findFaculty);
     }
     @GetMapping
-    public ResponseEntity<List<Faculty>> facultiesByAge(@RequestParam String color) {
-        List<Faculty> collect = facultyService.getAllFaculties().stream()
-                .filter(e -> e.getColor().equals(color))
-                .collect(Collectors.toList());
-        if (collect.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(collect);
+    public ResponseEntity<Collection<Faculty>> facultiesByColor(@RequestParam String color) {
+        Collection<Faculty> facultyCollection = facultyService.findFacultyByColor(color);
+        return ResponseEntity.ok(facultyCollection);
     }
-    @GetMapping("/find")
-    public ResponseEntity<Faculty> findfacultyByNameOrColor(@RequestParam(required = false) String name,
-                                            @RequestParam(required = false) String color) {
-        if (name != null) {
-            Faculty fa = facultyService.findFacultyByName(name);
-            if (fa == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(fa);
-        }
-        if (color != null) {
-            Faculty fa  = facultyService.findFacultyByColor(color);
-            if (fa == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(fa);
-        }
-        return ResponseEntity.badRequest().build();
+    @GetMapping("/find/{nameOrColor}")
+    public ResponseEntity<Collection<Faculty>> findfacultyByNameOrColor(@PathVariable String nameOrColor) {
+        Collection<Faculty> facultyCollection = facultyService.findFacultiesByNameOrColor(nameOrColor);
+        return ResponseEntity.ok(facultyCollection);
     }
 
     @GetMapping("/students")

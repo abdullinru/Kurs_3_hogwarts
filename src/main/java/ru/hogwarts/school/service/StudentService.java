@@ -22,7 +22,6 @@ public class StudentService {
         return studentRepository.save(student);
     }
     public Student getStudentById(long id) {
-
         return studentRepository.findById(id).orElse(null);
     }
 
@@ -30,7 +29,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
     public void removeStudentById(long id) {
-        studentRepository.deleteById(id);
+        studentRepository.findById(id).ifPresent(st -> studentRepository.deleteById(id));
     }
 
     public Collection<Student> findStudentsByAgeBetweenMinMax(int min, int max) {
@@ -47,5 +46,4 @@ public class StudentService {
         }
         return st.getFaculty();
     }
-
 }
