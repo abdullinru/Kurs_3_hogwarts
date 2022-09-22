@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
@@ -23,7 +24,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> creatStudent(@RequestBody Student student) {
-        return ResponseEntity.ok(studentService.creatStudent(student));
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.creatStudent(student));
     }
     @GetMapping("/{id}")
     public ResponseEntity<Student> findStudentById(@PathVariable Long id) {
