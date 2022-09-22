@@ -24,21 +24,18 @@ public class StudentService {
     public Student getStudentById(long id) {
         return studentRepository.findById(id).orElse(null);
     }
-
     public Student updateStudent(Student student) {
         return studentRepository.save(student);
     }
     public void removeStudentById(long id) {
         studentRepository.findById(id).ifPresent(st -> studentRepository.deleteById(id));
     }
-
     public Collection<Student> findStudentsByAgeBetweenMinMax(int min, int max) {
         return studentRepository.findStudentsByAgeBetween(min, max);
     }
     public Collection<Student> findStudentsByAge(int age) {
         return studentRepository.findStudentsByAge(age);
     }
-
     public Faculty getFacultyOfStudent(Long id) {
         Student st = studentRepository.findById(id).orElse(null);
         if (st == null) {

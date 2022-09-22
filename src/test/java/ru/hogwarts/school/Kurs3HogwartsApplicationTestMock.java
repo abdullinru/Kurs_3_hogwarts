@@ -59,6 +59,7 @@ class Kurs3HogwartsApplicationTestMock {
 
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.findByColorIgnoreCase(any(String.class))).thenReturn(List.of(faculty));
         when(facultyRepository.findFacultyByNameIgnoreCaseOrColorIgnoreCase(color, color))
                 .thenReturn(List.of(faculty));
 
@@ -90,6 +91,14 @@ class Kurs3HogwartsApplicationTestMock {
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
 
+//        mockMvc.perform(MockMvcRequestBuilders
+//                        .get("/faculty?color=" + color)
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").value(id))
+//                .andExpect(jsonPath("$.name").value(name))
+//                .andExpect(jsonPath("$.color").value(color));
+
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/find/" + color)
                         .accept(MediaType.APPLICATION_JSON))
@@ -97,6 +106,18 @@ class Kurs3HogwartsApplicationTestMock {
                 .andExpect(jsonPath("$[0].id").value(id))
                 .andExpect(jsonPath("$[0].name").value(name))
                 .andExpect(jsonPath("$[0].color").value(color));
+
+//        mockMvc.perform(MockMvcRequestBuilders
+//                        .get("/faculty/" + id + "students/")
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].id").value(id))
+//                .andExpect(jsonPath("$[0].name").value(name))
+//                .andExpect(jsonPath("$[0].color").value(color));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/faculty/" + id))
+                .andExpect(status().isOk());
     }
 
 }

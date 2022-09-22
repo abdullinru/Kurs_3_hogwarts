@@ -43,8 +43,8 @@ public class FacultyController {
         return ResponseEntity.ok(facultyCollection);
     }
 
-    @GetMapping("/students")
-    public ResponseEntity<Collection<Student>> getAllStudentsOfFaculty(@RequestParam Long id) {
+    @GetMapping("/{id}/students")
+    public ResponseEntity<Collection<Student>> getAllStudentsOfFaculty(@PathVariable Long id) {
         Collection<Student> students = facultyService.getStudentsOfFaculty(id);
         if (students.isEmpty()) {
             return ResponseEntity.notFound().build();
