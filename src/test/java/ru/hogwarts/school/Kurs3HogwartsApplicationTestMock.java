@@ -91,13 +91,13 @@ class Kurs3HogwartsApplicationTestMock {
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
 
-//        mockMvc.perform(MockMvcRequestBuilders
-//                        .get("/faculty?color=" + color)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(id))
-//                .andExpect(jsonPath("$.name").value(name))
-//                .andExpect(jsonPath("$.color").value(color));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty?color=" + color)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(id))
+                .andExpect(jsonPath("$[0].name").value(name))
+                .andExpect(jsonPath("$[0].color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/find/" + color)
