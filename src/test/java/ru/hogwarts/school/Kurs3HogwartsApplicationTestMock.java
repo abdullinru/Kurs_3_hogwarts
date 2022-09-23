@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
@@ -52,10 +53,14 @@ class Kurs3HogwartsApplicationTestMock {
         facultyObject.put("name", name);
         facultyObject.put("color", color);
 
+        Student rus = new Student(1, "rus", 33);
+        Student son = new Student(2, "son", 33);
+
         Faculty faculty = new Faculty();
         faculty.setId(id);
         faculty.setName(name);
         faculty.setColor(color);
+        faculty.setStudents(List.of(rus,son));
 
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
@@ -107,13 +112,16 @@ class Kurs3HogwartsApplicationTestMock {
                 .andExpect(jsonPath("$[0].name").value(name))
                 .andExpect(jsonPath("$[0].color").value(color));
 
-//        mockMvc.perform(MockMvcRequestBuilders
-//                        .get("/faculty/" + id + "students/")
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[0].id").value(id))
-//                .andExpect(jsonPath("$[0].name").value(name))
-//                .andExpect(jsonPath("$[0].color").value(color));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty/" + id + "/students/")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("rus"))
+                .andExpect(jsonPath("$[0].age").value(33))
+                .andExpect(jsonPath("$[1].id").value(2))
+                .andExpect(jsonPath("$[1].name").value("son"))
+                .andExpect(jsonPath("$[1].age").value(33));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/faculty/" + id))

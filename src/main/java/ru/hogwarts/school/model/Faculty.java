@@ -22,6 +22,11 @@ public class Faculty {
         this.name = name;
         this.color = color;
     }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
+
     public Faculty() {
     }
     public Collection<Student> getStudents() {
