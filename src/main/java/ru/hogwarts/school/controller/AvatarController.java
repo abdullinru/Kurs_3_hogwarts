@@ -1,7 +1,5 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,8 +15,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 @RestController
+@RequestMapping("/avatar")
 public class AvatarController {
     private final AvatarService avatarService;
 
@@ -26,7 +26,7 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
-    @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long id,
                                                @RequestParam MultipartFile avatarFile) throws IOException {
         if (avatarFile.getSize() > 1024 * 500) {
@@ -37,7 +37,7 @@ public class AvatarController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{id}/avatarFromDb")
+    @GetMapping("{id}/FromDb")
     public ResponseEntity<byte[]> dowloadAvatarsFromDB(@PathVariable Long id) {
         Avatar avatar = avatarService.findAvatarByStudentId(id);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -46,7 +46,7 @@ public class AvatarController {
 
         return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(avatar.getData());
     }
-    @GetMapping("{id}/avatarFromServer")
+    @GetMapping("{id}/FromServer")
     public void downloadAvatarFromServer (@PathVariable Long id,
                                           HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.findAvatarByStudentId(id);
@@ -59,6 +59,13 @@ public class AvatarController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Collection<Avatar>> getSpisokOfAvatars(@RequestParam("page") Integer pageNumber,
+                                                                @RequestParam("size") Integer pageSize) {
+        Collection<Avatar> avatars = avatarService.getSpisokOfAvatars(pageNumber, pageSize);
+        return ResponseEntity.ok(avatars);
     }
 
 
