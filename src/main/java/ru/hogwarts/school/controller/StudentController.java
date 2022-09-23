@@ -68,6 +68,12 @@ public class StudentController {
         }
         return ResponseEntity.ok(fa);
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getCountAllStudents() {
+        Integer count = studentService.getCountAllStudents();
+        return ResponseEntity.ok(count);
+    }
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updateStudent = studentService.updateStudent(student);

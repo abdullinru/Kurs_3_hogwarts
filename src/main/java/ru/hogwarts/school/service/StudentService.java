@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
+
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class StudentService {
@@ -42,5 +42,9 @@ public class StudentService {
             return null;
         }
         return st.getFaculty();
+    }
+
+    public Integer getCountAllStudents() {
+        return studentRepository.getCountAllStudents();
     }
 }

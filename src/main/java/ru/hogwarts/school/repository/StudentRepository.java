@@ -12,5 +12,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Collection<Student> findStudentsByAgeBetween(int age, int age2);
     Collection<Student> findStudentsByAge(int age);
 
+    @Query(value = "select count(*) from student", nativeQuery = true)
+    Integer getCountAllStudents();
+
 
 }
