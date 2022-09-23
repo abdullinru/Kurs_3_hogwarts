@@ -47,4 +47,7 @@ public class StudentService {
     public Integer getCountAllStudents() {
         return studentRepository.getCountAllStudents();
     }
+    public Integer getAvgAgeStudents() {
+        return studentRepository.getAvgAgeStudents();
+    }
 }

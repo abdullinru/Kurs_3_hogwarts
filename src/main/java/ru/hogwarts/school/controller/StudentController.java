@@ -74,6 +74,11 @@ public class StudentController {
         Integer count = studentService.getCountAllStudents();
         return ResponseEntity.ok(count);
     }
+    @GetMapping("/avgAge")
+    public ResponseEntity<Integer> getAvgAgeStudents() {
+        Integer avgAge = studentService.getAvgAgeStudents();
+        return ResponseEntity.ok(avgAge);
+    }
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updateStudent = studentService.updateStudent(student);
