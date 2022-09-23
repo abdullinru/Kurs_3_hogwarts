@@ -8,10 +8,4 @@ select * from student where age > id;
 
 select *from student order by age;
 
-
-
-
-
-
-
-
+select * from student order by id desc limit 5

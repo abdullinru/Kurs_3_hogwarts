@@ -50,4 +50,8 @@ public class StudentService {
     public Integer getAvgAgeStudents() {
         return studentRepository.getAvgAgeStudents();
     }
+    public Collection<Student> getLate5Students() {
+        return studentRepository.getLate5Students();
+    }
+
 }
