@@ -1,13 +1,12 @@
 CREATE TABLE human (
-                         Id SERIAL,
+                         Id integer primary key,
                          name varchar (20),
                          Age INTEGER,
                          isPrava BOOLEAN,
                          car_id integer REFERENCES car (id)
 );
-
 CREATE TABLE car (
-                       Id SERIAL,
+                       Id integer primary key,
                        marka varchar (10),
                        model char (10),
                        stoimost INTEGER
