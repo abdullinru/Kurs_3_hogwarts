@@ -13,7 +13,7 @@ import java.util.Collections;
 @Service
 public class FacultyService {
 
-    Logger logger = LoggerFactory.getLogger("FacultyService.class");
+    Logger logger = LoggerFactory.getLogger(FacultyService.class);
     private final FacultyRepository facultyRepository;
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
