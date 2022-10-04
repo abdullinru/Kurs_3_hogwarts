@@ -67,6 +67,11 @@ public class FacultyController {
         }
         return ResponseEntity.ok(result);
     }
+    @GetMapping("/sum")
+    public ResponseEntity<Integer> sum() {
+        Integer sum = facultyService.sum();
+        return ResponseEntity.ok(sum);
+    }
 
     @PutMapping
     public ResponseEntity<Faculty> updateStudent(@RequestBody Faculty faculty) {
