@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -68,6 +72,18 @@ public class StudentService {
     public Collection<Student> getLate5Students() {
         logger.info("Was invoked method for get 5 late students with max id");
         return studentRepository.getLate5Students();
+    }
+
+    public List<String> getStudentsNameStartsWithA() {
+        Stream<Student> streamStudent = studentRepository.findAll().stream();
+        List<String> result = streamStudent
+                .map(Student::getName)
+                .filter(name -> name.startsWith("R"))
+                .map(String::toLowerCase)
+                .map(StringUtils::capitalize)
+                .sorted()
+                .collect(Collectors.toList());
+        return result;
     }
 
 }

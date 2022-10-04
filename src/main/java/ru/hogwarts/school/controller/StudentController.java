@@ -84,6 +84,11 @@ public class StudentController {
         Collection<Student> students = studentService.getLate5Students();
         return ResponseEntity.ok(students);
     }
+    @GetMapping("/names/startsWithA")
+    public ResponseEntity<List<String>> getStudentsNameStartsWithA() {
+        List<String> result = studentService.getStudentsNameStartsWithA();
+        return ResponseEntity.ok(result);
+    }
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updateStudent = studentService.updateStudent(student);
