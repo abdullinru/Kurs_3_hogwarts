@@ -83,6 +83,7 @@ public class FacultyService {
                 .filter((name) -> name.length() == maxDlina)
                 .collect(Collectors.toList());
         return result;
+
     }
 
     public Integer sum() {

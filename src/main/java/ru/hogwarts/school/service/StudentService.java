@@ -80,9 +80,9 @@ public class StudentService {
         List<String> result = streamStudent
                 .map(Student::getName)
                 .filter(name -> name.startsWith("R"))
+                .sorted(String::compareTo)
                 .map(String::toLowerCase)
                 .map(StringUtils::capitalize)
-                .sorted()
                 .collect(Collectors.toList());
         return result;
     }
