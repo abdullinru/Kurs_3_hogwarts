@@ -89,6 +89,14 @@ public class StudentController {
         List<String> result = studentService.getStudentsNameStartsWithA();
         return ResponseEntity.ok(result);
     }
+    @GetMapping("/avgAgeStream")
+    public ResponseEntity<Double> getAvgAgeStudentStream() {
+        Double avgAge = studentService.getAvgAgeStudentStream();
+        if (avgAge == null) {
+            ResponseEntity.notFound();
+        }
+        return ResponseEntity.ok(avgAge);
+    }
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updateStudent = studentService.updateStudent(student);
