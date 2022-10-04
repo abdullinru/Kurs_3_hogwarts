@@ -93,7 +93,7 @@ public class StudentController {
     public ResponseEntity<Double> getAvgAgeStudentStream() {
         Double avgAge = studentService.getAvgAgeStudentStream();
         if (avgAge == null) {
-            ResponseEntity.notFound();
+            ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(avgAge);
     }
