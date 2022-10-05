@@ -99,6 +99,10 @@ public class StudentController {
     public void getNameStudentsThread() {
         studentService.getNameStudentsThread();
     }
+    @GetMapping("/nameThreadSynch")
+    public void getNameStudentsThreadSynch() {
+        studentService.getNameStudentsThreadSynch();
+    }
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updateStudent = studentService.updateStudent(student);

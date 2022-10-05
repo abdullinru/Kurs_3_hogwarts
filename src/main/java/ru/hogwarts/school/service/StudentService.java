@@ -120,4 +120,34 @@ public class StudentService {
             System.out.println(studentsName.get(5));
         }).start();
     }
+
+    public void getNameStudentsThreadSynch() {
+        Stream<Student> streamStudent = studentRepository.findAll().stream();
+        List<String> studentsName = streamStudent
+                .map(a -> a.getName())
+                .collect(Collectors.toList());
+
+        System.out.println(studentsName);
+        System.out.println("////////////////////////////////");
+
+        printStudent(studentsName.get(0));
+        printStudent(studentsName.get(1));
+
+        new Thread(() ->
+        {
+            printStudent(studentsName.get(2));
+            printStudent(studentsName.get(3));
+        }).start();
+
+
+        new Thread(() ->
+        {
+            printStudent(studentsName.get(4));
+            printStudent(studentsName.get(5));
+        }).start();
+    }
+
+    private synchronized void printStudent(String name) {
+        System.out.println(name);
+    }
 }
