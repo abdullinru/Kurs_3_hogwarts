@@ -95,4 +95,29 @@ public class StudentService {
         return result.orElse(null);
     }
 
+    public void getNameStudentsThread() {
+        Stream<Student> streamStudent = studentRepository.findAll().stream();
+        List<String> studentsName = streamStudent
+                .map(a -> a.getName())
+                .collect(Collectors.toList());
+
+        System.out.println(studentsName);
+        System.out.println("////////////////////////////////");
+
+        System.out.println(studentsName.get(0));
+        System.out.println(studentsName.get(1));
+
+        new Thread(() ->
+        {
+            System.out.println(studentsName.get(2));
+            System.out.println(studentsName.get(3));
+        }).start();
+
+
+        new Thread(() ->
+        {
+            System.out.println(studentsName.get(4));
+            System.out.println(studentsName.get(5));
+        }).start();
+    }
 }

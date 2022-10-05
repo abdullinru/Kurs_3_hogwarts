@@ -1,6 +1,5 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
@@ -96,6 +94,10 @@ public class StudentController {
             ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(avgAge);
+    }
+    @GetMapping("/nameThread")
+    public void getNameStudentsThread() {
+        studentService.getNameStudentsThread();
     }
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
