@@ -9,6 +9,7 @@ public class InfoService {
     @Value("${server.port}")
     private Integer port;
 
+    // method for return number of port
     public Integer getPort() {
         return port;
     }

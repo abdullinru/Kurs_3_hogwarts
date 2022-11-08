@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.hogwarts.school.service.InfoService;
 
+// контроллер для вывода в консоль номера используемого порта
 @RestController
 public class InfoController {
 
